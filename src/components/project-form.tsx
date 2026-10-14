@@ -29,7 +29,7 @@ export function ProjectForm({ action, project }: Props) {
 
   return (
     <form action={formAction}>
-      <Card className="grid gap-4 p-4">
+      <Card className="grid gap-4 p-5">
         {project ? <input type="hidden" name="id" value={project.id} /> : null}
 
         <div className="grid gap-2">

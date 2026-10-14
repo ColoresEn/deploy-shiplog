@@ -40,7 +40,7 @@ export default async function ProjectsPage() {
         <ul className="mt-6 grid gap-3">
           {projects.map((p) => (
             <li key={p.id}>
-              <Card className="relative transition hover:ring-foreground/20">
+              <Card className="p-5 relative transition hover:ring-foreground/20">
                 <Link
                   href={`/projects/${p.slug}`}
                   className="absolute inset-0 rounded-xl"
