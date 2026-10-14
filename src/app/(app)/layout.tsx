@@ -14,16 +14,16 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <>
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-          <Link href="/" className="font-semibold tracking-tight">
-            ShipLog
+      <header className="border-b border-border">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
+          <Link href="/" className="font-mono text-sm tracking-tight">
+            bitácora.dev
           </Link>
-          <div className="flex items-center gap-3 text-sm">
-            <span className="hidden text-muted-foreground sm:inline">{user.email}</span>
+          <div className="flex items-center gap-4 text-sm">
+            <span className="hidden text-muted-foreground font-mono sm:inline">{user.email}</span>
             <form action={signOut}>
-              <Button type="submit" variant="outline" size="sm">
-                Salir
+              <Button type="submit" variant="ghost" size="sm" className="font-mono text-xs">
+                salir
               </Button>
             </form>
           </div>

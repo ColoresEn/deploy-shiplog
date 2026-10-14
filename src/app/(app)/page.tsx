@@ -2,8 +2,6 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { STATUS_LABEL, type ProjectStatus } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 export default async function ProjectsPage() {
   const supabase = await createClient();
@@ -15,50 +13,46 @@ export default async function ProjectsPage() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Proyectos</h1>
+        <h1 className="font-mono text-sm">proyectos</h1>
         <Link href="/projects/new">
-          <Button>Nuevo proyecto</Button>
+          <Button variant="ghost" size="sm" className="font-mono text-xs">
+            + nuevo
+          </Button>
         </Link>
       </div>
 
       {!projects?.length ? (
-        <Card className="mt-6 flex flex-col items-center gap-4 px-6 py-14 text-center">
-          <span className="text-6xl leading-none" aria-hidden="true">🚀</span>
-          <div className="grid gap-1">
-            <p className="text-base font-semibold text-foreground">
-              Aún no tienes proyectos
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Crea el primero para empezar a registrar avances.
-            </p>
-          </div>
-          <Link href="/projects/new">
-            <Button>Crear primer proyecto</Button>
+        <div className="mt-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            Aún no tienes proyectos. Crea el primero para empezar a registrar avances.
+          </p>
+          <Link href="/projects/new" className="mt-4 inline-block">
+            <Button variant="ghost" size="sm" className="font-mono text-xs">
+              crear proyecto
+            </Button>
           </Link>
-        </Card>
+        </div>
       ) : (
-        <ul className="mt-6 grid gap-3">
+        <ul className="mt-6 space-y-2">
           {projects.map((p) => (
             <li key={p.id}>
-              <Card className="p-5 relative transition hover:ring-foreground/20">
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="absolute inset-0 rounded-xl"
-                  aria-label={p.name}
-                />
+              <Link
+                href={`/projects/${p.slug}`}
+                className="block border border-border p-4 hover:border-accent transition-colors"
+              >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-medium">{p.name}</span>
-                  <span className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Badge variant="outline">
+                  <span className="flex items-center gap-3 text-xs text-muted-foreground font-mono">
+                    <span className="text-accent">
                       {STATUS_LABEL[p.status as ProjectStatus]}
-                    </Badge>
-                    {p.entries[0]?.count ?? 0} entradas
+                    </span>
+                    <span>{p.entries[0]?.count ?? 0} entradas</span>
                   </span>
                 </div>
                 {p.description ? (
-                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{p.description}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>
                 ) : null}
-              </Card>
+              </Link>
             </li>
           ))}
         </ul>

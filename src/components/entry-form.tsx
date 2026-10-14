@@ -36,18 +36,18 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
 
   return (
     <form ref={formRef} action={formAction}>
-      <Card className="grid gap-3 p-4">
+      <div className="border border-border p-4 grid gap-4">
         <input type="hidden" name="project_id" value={projectId} />
         <input type="hidden" name="slug" value={slug} />
         {entry ? <input type="hidden" name="id" value={entry.id} /> : null}
 
-        <div className="grid gap-3 sm:grid-cols-[1fr_140px_150px]">
+        <div className="grid gap-4 sm:grid-cols-[1fr_140px_150px]">
           <div className="grid gap-2">
-            <Label htmlFor="title">¿Qué construiste?</Label>
+            <Label htmlFor="title" className="font-mono text-xs">¿qué construiste?</Label>
             <Input id="title" name="title" required maxLength={140} placeholder="Ej: Login con magic link" defaultValue={entry?.title} />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="kind">Tipo</Label>
+            <Label htmlFor="kind" className="font-mono text-xs">tipo</Label>
             <Select
               name="kind"
               defaultValue={entry?.kind ?? "feature"}
@@ -64,29 +64,29 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
             </Select>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="shipped_at">Fecha</Label>
+            <Label htmlFor="shipped_at" className="font-mono text-xs">fecha</Label>
             <Input id="shipped_at" name="shipped_at" type="date" required defaultValue={entry?.shipped_at ?? today} />
           </div>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="grid gap-2">
-            <Label htmlFor="tokens">Tokens gastados (opcional)</Label>
+            <Label htmlFor="tokens" className="font-mono text-xs">tokens gastados (opcional)</Label>
             <Input id="tokens" name="tokens" type="number" min={0} step={1} inputMode="numeric" placeholder="0" defaultValue={entry?.tokens ? String(entry.tokens) : ""} />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="cost_usd">Costo en USD (opcional)</Label>
+            <Label htmlFor="cost_usd" className="font-mono text-xs">costo en USD (opcional)</Label>
             <Input id="cost_usd" name="cost_usd" type="number" min={0} step="0.0001" inputMode="decimal" placeholder="0.00" defaultValue={entry?.cost_usd ? String(entry.cost_usd) : ""} />
           </div>
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="body">Detalle (opcional)</Label>
+          <Label htmlFor="body" className="font-mono text-xs">detalle (opcional)</Label>
           <Textarea id="body" name="body" rows={entry ? 5 : 2} defaultValue={entry?.body ?? ""} />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="tags">Tags (separados por coma)</Label>
+          <Label htmlFor="tags" className="font-mono text-xs">tags (separados por coma)</Label>
           <Input id="tags" name="tags" placeholder="auth, ui" defaultValue={entry?.tags.join(", ")} />
         </div>
 
@@ -95,14 +95,14 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
         <div className="flex justify-end gap-2">
           {entry ? (
             <Link href={`/projects/${slug}`}>
-              <Button variant="outline">Cancelar</Button>
+              <Button variant="ghost" size="sm" className="font-mono text-xs">cancelar</Button>
             </Link>
           ) : null}
-          <Button type="submit" disabled={pending}>
-            {pending ? "Guardando…" : entry ? "Guardar" : "Registrar avance"}
+          <Button type="submit" disabled={pending} className="font-mono text-xs">
+            {pending ? "guardando…" : entry ? "guardar" : "registrar avance"}
           </Button>
         </div>
-      </Card>
+      </div>
     </form>
   );
 }

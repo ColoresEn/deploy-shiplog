@@ -6,7 +6,6 @@ import { createEntry } from "@/app/actions/entries";
 import { EntryForm } from "@/components/entry-form";
 import { Timeline } from "@/components/timeline";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import type { Tables } from "@/lib/database.types";
 
 const usdFmt = new Intl.NumberFormat("en-US", {
@@ -45,29 +44,31 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
     <>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:underline">Proyectos</Link>
+          <p className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
+            <Link href="/" className="hover:text-foreground">proyectos</Link>
             <span>/</span>
-            <Badge variant="outline">{STATUS_LABEL[project.status as ProjectStatus]}</Badge>
+            <span className="text-accent">{STATUS_LABEL[project.status as ProjectStatus]}</span>
           </p>
-          <h1 className="text-xl font-semibold">{project.name}</h1>
+          <h1 className="text-lg font-medium mt-1">{project.name}</h1>
           {project.description ? (
-            <p className="mt-1 text-sm text-muted-foreground">{project.description}</p>
+            <p className="mt-2 text-sm text-muted-foreground">{project.description}</p>
           ) : null}
           {project.repo_url ? (
-            <a href={project.repo_url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs text-primary hover:underline">
+            <a href={project.repo_url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-xs text-muted-foreground hover:text-foreground font-mono">
               {project.repo_url.replace(/^https?:\/\//, "")}
             </a>
           ) : null}
         </div>
         <Link href={`/projects/${project.slug}/edit`}>
-          <Button variant="outline">Editar</Button>
+          <Button variant="ghost" size="sm" className="font-mono text-xs">
+            editar
+          </Button>
         </Link>
       </div>
 
       {(tokens > 0 || costUsd > 0) ? (
-        <p className="mt-3 text-xs text-muted-foreground">
-          Total invertido:{" "}
+        <p className="mt-4 text-xs text-muted-foreground font-mono">
+          total invertido:{" "}
           {tokens > 0 ? <>{tokens.toLocaleString()} tokens</> : null}
           {tokens > 0 && costUsd > 0 ? " · " : null}
           {costUsd > 0 ? <>{usdFmt.format(costUsd)}</> : null}

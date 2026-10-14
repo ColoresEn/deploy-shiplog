@@ -29,26 +29,26 @@ export function ProjectForm({ action, project }: Props) {
 
   return (
     <form action={formAction}>
-      <Card className="grid gap-4 p-5">
+      <div className="border border-border p-5 grid gap-4">
         {project ? <input type="hidden" name="id" value={project.id} /> : null}
 
         <div className="grid gap-2">
-          <Label htmlFor="name">Nombre</Label>
+          <Label htmlFor="name" className="font-mono text-xs">nombre</Label>
           <Input id="name" name="name" required maxLength={80} defaultValue={project?.name} />
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="description">Descripción</Label>
+          <Label htmlFor="description" className="font-mono text-xs">descripción</Label>
           <Textarea id="description" name="description" rows={3} defaultValue={project?.description ?? ""} />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="grid gap-2">
-            <Label htmlFor="repo_url">Repo (URL)</Label>
+            <Label htmlFor="repo_url" className="font-mono text-xs">repo (URL)</Label>
             <Input id="repo_url" name="repo_url" type="url" placeholder="https://github.com/…" defaultValue={project?.repo_url ?? ""} />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="status">Estado</Label>
+            <Label htmlFor="status" className="font-mono text-xs">estado</Label>
             <Select
               name="status"
               defaultValue={project?.status ?? "active"}
@@ -77,13 +77,13 @@ export function ProjectForm({ action, project }: Props) {
 
         <div className="flex justify-end gap-2">
           <Link href={project ? `/projects/${project.slug}` : "/"}>
-            <Button variant="outline">Cancelar</Button>
+            <Button variant="ghost" size="sm" className="font-mono text-xs">cancelar</Button>
           </Link>
-          <Button type="submit" disabled={pending}>
-            {pending ? "Guardando…" : project ? "Guardar" : "Crear proyecto"}
+          <Button type="submit" disabled={pending} className="font-mono text-xs">
+            {pending ? "guardando…" : project ? "guardar" : "crear proyecto"}
           </Button>
         </div>
-      </Card>
+      </div>
     </form>
   );
 }

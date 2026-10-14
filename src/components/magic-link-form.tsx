@@ -33,9 +33,9 @@ export function MagicLinkForm({ next }: { next: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="email">Correo</Label>
+        <Label htmlFor="email" className="font-mono text-xs">correo</Label>
         <Input
           id="email"
           type="email"
@@ -48,7 +48,7 @@ export function MagicLinkForm({ next }: { next: string }) {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="password">Contraseña</Label>
+        <Label htmlFor="password" className="font-mono text-xs">contraseña</Label>
         <Input
           id="password"
           type="password"
@@ -61,13 +61,13 @@ export function MagicLinkForm({ next }: { next: string }) {
         />
       </div>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
-      <Button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Entrando…" : "Entrar"}
+      <Button type="submit" disabled={status === "loading"} className="font-mono text-xs">
+        {status === "loading" ? "entrando…" : "entrar"}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         ¿No tienes cuenta?{" "}
         <a href="/signup" className="underline hover:text-foreground">
-          Regístrate
+          regístrate
         </a>
       </p>
     </form>

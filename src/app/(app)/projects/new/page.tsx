@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Nuevo proyecto" };
 export default function NewProjectPage() {
   return (
     <>
-      <h1 className="text-xl font-semibold">Nuevo proyecto</h1>
+      <h1 className="font-mono text-sm">nuevo proyecto</h1>
       <div className="mt-6">
         <ProjectForm action={createProject} />
       </div>

@@ -52,9 +52,9 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="email">Correo</Label>
+        <Label htmlFor="email" className="font-mono text-xs">correo</Label>
         <Input
           id="email"
           type="email"
@@ -67,7 +67,7 @@ export function SignupForm() {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="password">Contraseña</Label>
+        <Label htmlFor="password" className="font-mono text-xs">contraseña</Label>
         <Input
           id="password"
           type="password"
@@ -80,7 +80,7 @@ export function SignupForm() {
         />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
+        <Label htmlFor="confirmPassword" className="font-mono text-xs">confirmar contraseña</Label>
         <Input
           id="confirmPassword"
           type="password"
@@ -93,13 +93,13 @@ export function SignupForm() {
         />
       </div>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
-      <Button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Registrando…" : "Registrarse"}
+      <Button type="submit" disabled={status === "loading"} className="font-mono text-xs">
+        {status === "loading" ? "registrando…" : "registrarse"}
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         ¿Ya tienes cuenta?{" "}
         <a href="/login" className="underline hover:text-foreground">
-          Inicia sesión
+          inicia sesión
         </a>
       </p>
     </form>
