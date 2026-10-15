@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function SignupForm() {
   const [email, setEmail] = useState("");
@@ -98,9 +99,9 @@ export function SignupForm() {
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         ¿Ya tienes cuenta?{" "}
-        <a href="/login" className="underline hover:text-foreground">
+        <Link href="/login" className="underline hover:text-foreground">
           inicia sesión
-        </a>
+        </Link>
       </p>
     </form>
   );
