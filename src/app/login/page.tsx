@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Entrar" };
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const { error, next } = await searchParams;
-  const nextPath = typeof next === "string" ? next : "/";
+  const nextPath = typeof next === "string" ? next : "/projects";
 
   return (
     <>

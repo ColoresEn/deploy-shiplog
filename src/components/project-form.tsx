@@ -76,7 +76,7 @@ export function ProjectForm({ action, project }: Props) {
         {state?.error ? <p className="text-sm text-destructive">{state.error}</p> : null}
 
         <div className="flex justify-end gap-2">
-          <Link href={project ? `/projects/${project.slug}` : "/"}>
+          <Link href={project ? `/projects/${project.slug}` : "/projects"}>
             <Button variant="ghost" size="sm" className="font-mono text-xs">cancelar</Button>
           </Link>
           <Button type="submit" disabled={pending} className="font-mono text-xs">

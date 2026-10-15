@@ -1,13 +1,35 @@
 do $$
 declare
-  v_email   text := 'blogencolores@gmail.com';
+  v_email   text := 'demo@shiplog.local';
   v_user_id uuid;
   v_project uuid;
 begin
   select id into v_user_id from auth.users where email = v_email;
 
   if v_user_id is null then
-    raise exception 'No existe un usuario con email %. Para crear el usuario demo, inicia sesión en /signup con este correo o crea el usuario vía Admin API.', v_email;
+    -- Crear usuario demo si no existe
+    insert into auth.users (id, email, email_confirmed_at, raw_user_meta_data, created_at, updated_at)
+    values (
+      gen_random_uuid(),
+      v_email,
+      now(),
+      '{"name":"Demo User"}'::jsonb,
+      now(),
+      now()
+    )
+    returning id into v_user_id;
+
+    -- Crear identidad para el usuario
+    insert into auth.identities (user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at)
+    values (
+      v_user_id,
+      jsonb_build_object('sub', v_user_id::text, 'email', v_email),
+      'email',
+      v_user_id::text,
+      now(),
+      now(),
+      now()
+    );
   end if;
 
   insert into public.projects (user_id, name, slug, description, repo_url, status, is_public)

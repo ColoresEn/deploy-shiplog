@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/proxy";
 
-const PUBLIC_PATHS = ["/login", "/auth/callback"];
+const PUBLIC_PATHS = ["/login", "/signup", "/auth/callback"];
 
 export async function proxy(request: NextRequest) {
   const { response, user } = await updateSession(request);
@@ -18,7 +18,21 @@ export async function proxy(request: NextRequest) {
 
   if (user && pathname === "/login") {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/projects";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
+
+  if (user && pathname === "/signup") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/projects";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
+
+  if (user && pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/projects";
     url.search = "";
     return NextResponse.redirect(url);
   }

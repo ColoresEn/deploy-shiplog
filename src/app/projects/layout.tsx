@@ -27,7 +27,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
               priority
               className="navbar-brand w-auto mr-2"
             />
-          <Link href="/" className="font-mono text-sm tracking-tight">
+          <Link href="/projects" className="font-mono text-sm tracking-tight">
             fepdev.es
           </Link>
           </div>

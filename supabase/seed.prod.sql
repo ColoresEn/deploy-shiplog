@@ -9,7 +9,7 @@
 
 do $$
 declare
-  v_email   text := 'blogencolores@gmail.com';
+  v_email   text := 'demo@shiplog.local';
   v_user_id uuid;
   v_project uuid;
   
