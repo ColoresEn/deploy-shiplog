@@ -4,8 +4,10 @@ import { updateSession } from "@/lib/supabase/proxy";
 const PUBLIC_PATHS = ["/login", "/signup", "/auth/callback"];
 
 export async function proxy(request: NextRequest) {
-  const { response, user } = await updateSession(request);
   const { pathname } = request.nextUrl;
+  if (pathname === "/api/github/webhook") return NextResponse.next();
+
+  const { response, user } = await updateSession(request);
 
   const isPublic = PUBLIC_PATHS.some((p) => pathname.startsWith(p));
 

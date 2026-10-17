@@ -14,6 +14,7 @@ export type Database = {
           body: string | null
           cost_usd: number
           created_at: string
+          github_pr_url: string | null
           id: string
           kind: string
           project_id: string
@@ -27,6 +28,7 @@ export type Database = {
           body?: string | null
           cost_usd?: number
           created_at?: string
+          github_pr_url?: string | null
           id?: string
           kind?: string
           project_id: string
@@ -40,6 +42,7 @@ export type Database = {
           body?: string | null
           cost_usd?: number
           created_at?: string
+          github_pr_url?: string | null
           id?: string
           kind?: string
           project_id?: string
@@ -233,4 +236,3 @@ export const Constants = {
     Enums: {},
   },
 } as const
-

@@ -9,7 +9,7 @@ Bitácora de desarrollo: registra qué construiste en cada proyecto y míralo ag
 - **Entradas flexibles**: Registra features, bugfixes, refactor y otros cambios con tags personalizados
 - **Timeline semanal**: Las entradas se agrupan automáticamente por semana (formato ISO)
 - **Proyectos públicos**: Puedes hacer público un proyecto y compartir un resumen semanal
-- **Integración con GitHub**: (Fase 3) Sugerir entradas a partir de commits/PRs mergeados
+- **Integración con GitHub**: Sugerencias revisables y entradas automáticas al mergear PRs
 
 ## Stack Tecnológico
 
@@ -98,8 +98,12 @@ Login por magic link: escribe un correo en `/login` y abre el enlace en Mailpit 
 - ⏳ Metadatos OG para compartir en redes
 
 ### Fase 3 — Automatización
-- ⏳ Conectar repo de GitHub: sugerir entradas a partir de commits/PRs mergeados
+- ✅ Sugerencias desde commits/PRs mergeados y entradas automáticas con un webhook firmado
 - ⏳ Recordatorio semanal por email (Resend) si no hubo entradas
+
+Para usar las sugerencias, añade la URL de un repositorio público de GitHub en la edición del proyecto y pulsa **buscar cambios** en su timeline. Puedes revisar y editar cada sugerencia antes de guardar. No se requiere token para repositorios públicos; los repos privados no están soportados.
+
+Para crear entradas automáticamente al hacer merge, configura en GitHub un webhook con la URL `https://<tu-dominio>/api/github/webhook`, formato **application/json** y el evento **Pull requests**. Usa el mismo valor aleatorio largo como secreto del webhook y en `GITHUB_WEBHOOK_SECRET`; configura también `SUPABASE_SECRET_KEY` con la clave secreta del proyecto en el entorno del servidor. La clave secreta nunca debe llevar el prefijo `NEXT_PUBLIC_`. El webhook procesa solo la acción `closed` cuando el PR incluye fecha de merge y crea como máximo una entrada por PR y proyecto. Aplica la migración de Supabase antes de activarlo.
 
 ## Variables de Entorno
 
@@ -107,8 +111,10 @@ Copia `.env.example` a `.env.local`:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+SUPABASE_SECRET_KEY=
+GITHUB_WEBHOOK_SECRET=
 ```
 
 Para conectar a Supabase en producción, usa `npm run dev:prod` con `.env.prod`.
