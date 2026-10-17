@@ -27,7 +27,7 @@ function parseProject(fd: FormData) {
   const status = str(fd, "status") || "active";
   if (!name) return { error: "El nombre es obligatorio." } as const;
   if (!isStatus(status)) return { error: "Estado inválido." } as const;
-  const repo_url = str(fd, "https://fepdev.es");
+  const repo_url = str(fd, "repo_url");
   if (repo_url && !/^https?:\/\//.test(repo_url))
     return { error: "El enlace al repo debe empezar por http(s)://" } as const;
   return {
