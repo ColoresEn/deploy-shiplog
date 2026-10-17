@@ -9,7 +9,7 @@ Bitácora de desarrollo: registra qué construiste en cada proyecto y míralo ag
 - **Entradas flexibles**: Registra features, bugfixes, refactor y otros cambios con tags personalizados
 - **Timeline semanal**: Las entradas se agrupan automáticamente por semana (formato ISO)
 - **Proyectos públicos**: Puedes hacer público un proyecto y compartir un resumen semanal
-- **Integración con GitHub**: (Fase 3) Sugerir entradas a partir de commits/PRs mergeados
+- **Integración con GitHub**: Sugerencias revisables a partir de commits y PRs mergeados de repositorios públicos
 
 ## Stack Tecnológico
 
@@ -98,8 +98,10 @@ Login por magic link: escribe un correo en `/login` y abre el enlace en Mailpit 
 - ⏳ Metadatos OG para compartir en redes
 
 ### Fase 3 — Automatización
-- ⏳ Conectar repo de GitHub: sugerir entradas a partir de commits/PRs mergeados
+- ✅ Conectar un repo público de GitHub y sugerir entradas a partir de commits/PRs mergeados
 - ⏳ Recordatorio semanal por email (Resend) si no hubo entradas
+
+Para usar las sugerencias, añade la URL de un repositorio público de GitHub en la edición del proyecto y pulsa **buscar cambios** en su timeline. Puedes revisar y editar cada sugerencia antes de guardar. No se requiere token para repositorios públicos; los repos privados no están soportados.
 
 ## Variables de Entorno
 

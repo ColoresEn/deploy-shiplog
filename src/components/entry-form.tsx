@@ -4,8 +4,8 @@ import { useActionState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ENTRY_KINDS, KIND_LABEL } from "@/lib/constants";
 import type { ActionState } from "@/app/actions/projects";
+import type { GitHubSuggestion } from "@/app/actions/github";
 import type { Tables } from "@/lib/database.types";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,15 +24,26 @@ type Props = {
   slug: string;
   entry?: Tables<"entries">;
   today: string;
+  suggestion?: GitHubSuggestion;
+  onSaved?: () => void;
 };
 
-export function EntryForm({ action, projectId, slug, entry, today }: Props) {
+export function EntryForm({ action, projectId, slug, entry, today, suggestion, onSaved }: Props) {
   const [state, formAction, pending] = useActionState(action, undefined);
   const formRef = useRef<HTMLFormElement>(null);
+  const wasPending = useRef(false);
 
   useEffect(() => {
-    if (!entry && !pending && state === undefined) formRef.current?.reset();
-  }, [entry, pending, state]);
+    if (pending) {
+      wasPending.current = true;
+    } else if (wasPending.current) {
+      wasPending.current = false;
+      if (state === undefined) {
+        formRef.current?.reset();
+        onSaved?.();
+      }
+    }
+  }, [pending, state, onSaved]);
 
   return (
     <form ref={formRef} action={formAction}>
@@ -44,13 +55,13 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
         <div className="grid gap-4 sm:grid-cols-[1fr_140px_150px]">
           <div className="grid gap-2">
             <Label htmlFor="title" className="font-mono text-xs">¿qué construiste?</Label>
-            <Input id="title" name="title" required maxLength={140} placeholder="Ej: Login con magic link" defaultValue={entry?.title} />
+            <Input id="title" name="title" required maxLength={140} placeholder="Ej: Login con magic link" defaultValue={entry?.title ?? suggestion?.title} />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="kind" className="font-mono text-xs">tipo</Label>
             <Select
               name="kind"
-              defaultValue={entry?.kind ?? "feature"}
+              defaultValue={entry?.kind ?? suggestion?.kind ?? "feature"}
               items={ENTRY_KINDS.map((k) => ({ value: k, label: KIND_LABEL[k] }))}
             >
               <SelectTrigger id="kind" className="w-full">
@@ -65,7 +76,7 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="shipped_at" className="font-mono text-xs">fecha</Label>
-            <Input id="shipped_at" name="shipped_at" type="date" required defaultValue={entry?.shipped_at ?? today} />
+            <Input id="shipped_at" name="shipped_at" type="date" required defaultValue={entry?.shipped_at ?? suggestion?.shippedAt ?? today} />
           </div>
         </div>
 
@@ -82,7 +93,7 @@ export function EntryForm({ action, projectId, slug, entry, today }: Props) {
 
         <div className="grid gap-2">
           <Label htmlFor="body" className="font-mono text-xs">detalle (opcional)</Label>
-          <Textarea id="body" name="body" rows={entry ? 5 : 2} defaultValue={entry?.body ?? ""} />
+          <Textarea id="body" name="body" rows={entry ? 5 : 2} defaultValue={entry?.body ?? suggestion?.body ?? ""} />
         </div>
 
         <div className="grid gap-2">

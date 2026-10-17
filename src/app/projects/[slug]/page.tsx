@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { STATUS_LABEL, type ProjectStatus } from "@/lib/constants";
 import { createEntry } from "@/app/actions/entries";
+import { ProjectEntryComposer } from "@/components/project-entry-composer";
 import { EntryForm } from "@/components/entry-form";
 import { Timeline } from "@/components/timeline";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,21 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       ) : null}
 
       <div className="mt-6">
-        <EntryForm action={createEntry} projectId={project.id} slug={project.slug} today={today} />
+        {project.repo_url ? (
+          <ProjectEntryComposer projectId={project.id} slug={project.slug} today={today} />
+        ) : (
+          <>
+            <div className="mb-4 border border-border p-4">
+              <p className="mb-3 text-xs text-muted-foreground">
+                Conecta un repo público de GitHub para obtener sugerencias de commits y PRs mergeados.
+              </p>
+              <Link href={`/projects/${project.slug}/edit`} className="font-mono text-xs text-accent hover:underline">
+                añadir URL del repo
+              </Link>
+            </div>
+            <EntryForm action={createEntry} projectId={project.id} slug={project.slug} today={today} />
+          </>
+        )}
       </div>
 
       <div className="mt-8">
